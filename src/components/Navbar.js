@@ -1,12 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from '../components/Button.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
-import {
-	faHamburger,
-	faTimes,
-	faBars,
-} from '@fortawesome/free-solid-svg-icons';
 import './Navbar.css';
 // import { } from '@fortawesome/free-solid-svg-icons';
 
@@ -22,25 +17,27 @@ const Navbar = () => {
 		}
 	};
 
+	useEffect(() => {
+		showButton();
+	}, []);
+
 	window.addEventListener('resize', showButton);
 
-	function handleClick() {
-		setClick();
-		console.log('Clicked');
-	}
+	const handleClick = () => setClick(!click);
+	const closeMobileMenu = () => setClick(false);
 
-	function closeMobileMenu() {
-		setClick(false);
-	}
 	return (
 		<>
 			<nav className='navbar'>
 				<div className='navbar-container'>
-					<Link path='/' className='navbar-logo'>
-						TRVL
+					<Link
+						path='/'
+						className='navbar-logo'
+						onclick={closeMobileMenu}>
+						TRVL <i className='fab fa-typo3'></i>
 					</Link>
 					<div className='menu-icon' onClick={handleClick}>
-						<FontAwesomeIcon icon={faBars} />
+						<i className={click ? 'fas fa-times' : 'fas fa-bars'} />
 					</div>
 					<ul className={click ? 'nav-menu active' : 'nav-menu'}>
 						<li className='nav-item'>
